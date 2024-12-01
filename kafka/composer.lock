@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "d6580d3d11e45f74b60b81097121b2f1",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "kwn/php-rdkafka-stubs",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kwn/php-rdkafka-stubs.git",
+                "reference": "23b865d6b3e8fe1f080aa7371dc1da3339361996"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kwn/php-rdkafka-stubs/zipball/23b865d6b3e8fe1f080aa7371dc1da3339361996",
+                "reference": "23b865d6b3e8fe1f080aa7371dc1da3339361996",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-rdkafka": ">=4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.2.4"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Karol Wnuk",
+                    "email": "k.wnuk@ascetic.pl"
+                }
+            ],
+            "description": "Rdkafka extension stubs for your IDE",
+            "support": {
+                "issues": "https://github.com/kwn/php-rdkafka-stubs/issues",
+                "source": "https://github.com/kwn/php-rdkafka-stubs/tree/v2.2.1"
+            },
+            "time": "2022-08-16T15:27:51+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}

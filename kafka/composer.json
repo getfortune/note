@@ -1,0 +1,17 @@
+{
+    "name": "p/kfaka",
+    "autoload": {
+        "psr-4": {
+            "P\\Kfaka\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pyh",
+            "email": "1360840902@qq.com"
+        }
+    ],
+    "require-dev": {
+        "kwn/php-rdkafka-stubs": "^2.2"
+    }
+}
