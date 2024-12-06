@@ -14,11 +14,16 @@ services:
       - "9092:9092"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181       
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092 #注意,这里不能设置成localhost和127.0.0.1
-      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092 #注意,这里不能设置成localhost和127.0.0.1 # 其他 Broker 和客户端会通过  advertised.listeners  发布的监听器来跟该 Broker 建立链接。
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092   # 配置自己的监听器 0.0.0.0 代表所有的网络
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT # 配置监听器的监听名称, INSIDE 是我们自己定义的名称，协议基于PLAINTEXT  默认映射中并没有对应的映射关系  所以我们就需要主动设置这个映射关系
       KAFKA_LISTENER_NAME_SELECTOR: INSIDE
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE  # Broker之间的连接用 INSIDE 监听器
+#      PLAINTEXT=> PLAINTEXT 不需要授权, 非加密通道
+#      SSL=> SSL 使用 SSL 加密通道
+#      SASL_PLAINTEXT=> SASL_PLAINTEXT 使用 SASL 认证非加密通道
+#      SASL_SSL=> SASL_SSL 使用 SASL 认证并且 SSL 加密通道
+#      这部分 kafka配置解释可以查看  https://blog.csdn.net/qq_38263083/article/details/135154714
   kafka2:
     image: wurstmeister/kafka       # 镜像
     container_name: kafka2
