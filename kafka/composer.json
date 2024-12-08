@@ -13,5 +13,8 @@
     ],
     "require-dev": {
         "kwn/php-rdkafka-stubs": "^2.2"
-    }
+    },
+  "require": {
+    "ext-json": "*"
+  }
 }

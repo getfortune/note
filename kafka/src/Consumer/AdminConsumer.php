@@ -13,8 +13,10 @@ class AdminConsumer
         $conf = new RdKafka\Conf();
         $conf->set('log_level', (string)LOG_DEBUG);
         $conf->set('debug', 'all');
-        $this->consumer = new RdKafka\Consumer($conf);
-        $this->consumer->addBrokers("localhost:9092,localhost:9093,localhost:9094");
+        $conf->set('bootstrap.servers', 'localhost:9092'); // 设置bootstrap.servers参数
+        $conf->set('auto.offset.reset', 'earliest');
+        $conf->set('enable.auto.commit', 0);
+        $this->consumer = new RdKafka\KafkaConsumer($conf);
     }
 
     public function consumerTopic(string $topic, int $partition = 0, int $offset = RD_KAFKA_OFFSET_BEGINNING)
