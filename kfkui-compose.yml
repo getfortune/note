@@ -8,8 +8,8 @@ services:
   kafka:
     image: wurstmeister/kafka       # 镜像
     container_name: kafka
-    volumes: 
-        - /etc/localtime:/etc/localtime # 挂载位置
+#    volumes:
+#        - /etc/localtime:/etc/localtime # 挂载位置
     ports:
       - "9092:9092"
     environment:
@@ -24,34 +24,34 @@ services:
 #      SASL_PLAINTEXT=> SASL_PLAINTEXT 使用 SASL 认证非加密通道
 #      SASL_SSL=> SASL_SSL 使用 SASL 认证并且 SSL 加密通道
 #      这部分 kafka配置解释可以查看  https://blog.csdn.net/qq_38263083/article/details/135154714
-#  kafka2:
-#    image: wurstmeister/kafka       # 镜像
-#    container_name: kafka2
+  kafka2:
+    image: wurstmeister/kafka       # 镜像
+    container_name: kafka2
 #    volumes:
-#        - /etc/localtime:/etc/localtime # 挂载位置
-#    ports:
-#      - "9093:9092"
-#    environment:
-#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-#      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093 #注意,这里不能设置成localhost和127.0.0.1
-#      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093
-#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT
-#      KAFKA_LISTENER_NAME_SELECTOR: INSIDE
-#      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-#  kafka3:
-#    image: wurstmeister/kafka       # 镜像
-#    container_name: kafka3
+#        - /etc/localtime2:/etc/localtime # 挂载位置
+    ports:
+      - "9093:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka2:9093 #注意,这里不能设置成localhost和127.0.0.1
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT
+      KAFKA_LISTENER_NAME_SELECTOR: INSIDE
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+  kafka3:
+    image: wurstmeister/kafka       # 镜像
+    container_name: kafka3
 #    volumes:
-#        - /etc/localtime:/etc/localtime # 挂载位置
-#    ports:
-#      - "9094:9092"
-#    environment:
-#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-#      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9094 #注意,这里不能设置成localhost和127.0.0.1
-#      KAFKA_LISTENERS: INSIDE://0.0.0.0:9094
-#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT
-#      KAFKA_LISTENER_NAME_SELECTOR: INSIDE
-#      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+#        - /etc/localtime3:/etc/localtime # 挂载位置
+    ports:
+      - "9094:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka3:9094 #注意,这里不能设置成localhost和127.0.0.1
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT
+      KAFKA_LISTENER_NAME_SELECTOR: INSIDE
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
@@ -59,12 +59,12 @@ services:
        - "8080:8080"
     depends_on:
       - kafka
-#      - kafka2
-#      - kafka3
+      - kafka2
+      - kafka3
     environment:
       DYNAMIC_CONFIG_ENABLED: 'true'
       KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS: kafka:9092,kafka2:9093,kafka3:9094  # 使用 Kafka 服务的内部网络地址
+      KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS: kafka:9092,kafka2:9092,kafka3:9092  # 使用 Kafka 服务的内部网络地址
 
 # 之前我部署kafka-ui 没有成功是因为 没有在同一个网络 不同的容器之间，网络是隔离的，需要连接起来才能够实现相互之间的访问
 # kafka 的环境变量会转换成为kafka 的配置 KAFKA_ZOOKEEPER_CONNECT => kafka.zookeeper.connect = zookeeper:2181  这个说的是 kafka 的配置 zookeeper.connect = zookeeper:2181

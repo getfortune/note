@@ -13,9 +13,9 @@ class AdminConsumer
         $conf = new RdKafka\Conf();
         $conf->set('log_level', (string)LOG_DEBUG);
         $conf->set('debug', 'all');
-        $conf->set('bootstrap.servers', 'localhost:9092'); // 设置bootstrap.servers参数
-        $conf->set('auto.offset.reset', 'earliest');
-        $conf->set('enable.auto.commit', 0);
+        $conf->set('bootstrap.servers', 'kafka2:9093,kafka3:9094,kafka:9092'); // 设置bootstrap.servers参数
+//        $conf->set('auto.offset.reset', 'earliest');
+//        $conf->set('enable.auto.commit', 0);
         $this->consumer = new RdKafka\KafkaConsumer($conf);
     }
 

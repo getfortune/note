@@ -21,7 +21,7 @@ class AdminProducer
         $conf = new RdKafka\Conf();
 //        $conf->set('log_level', (string)LOG_DEBUG);
 //        $conf->set('debug', 'all');
-        $conf->set('bootstrap.servers', 'localhost:9092'); // 使用 Docker Compose 服务名称连接 Kafka
+        $conf->set('bootstrap.servers', 'kafka2:9093,kafka3:9094,kafka:9092'); // 使用 Docker Compose 服务名称连接 Kafka
         /**
          * 用于确定当消费者在一个新的消费组中或者消费的偏移量无效的情况下应该从哪里开始读取消息。
          * 当设置为earliest时，消费者会从最早的可用消息开始消费，即从最早的偏移量开始消费。
@@ -37,7 +37,6 @@ class AdminProducer
 //        $conf->set('enable.auto.commit', 0);
 //        $conf->set('log.replication', 3); // 指定副本   如果需要针对不同的分区设置不同的副本那么需要根据多个Conf 创建多个 producer
         $this->producer  = new Producer($conf);
-        $this->producer->addBrokers("localhost:9092");
     }
 
     /**
