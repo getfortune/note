@@ -36,6 +36,8 @@ class AdminProducer
          */
 //        $conf->set('enable.auto.commit', 0);
 //        $conf->set('log.replication', 3); // 指定副本   如果需要针对不同的分区设置不同的副本那么需要根据多个Conf 创建多个 producer
+        // 配合 KafkaConsumer 使用  group.id 对于 producer 无效
+//        $conf->set('group.id', 'myConsumerGroup');
         $this->producer  = new Producer($conf);
     }
 
@@ -76,4 +78,26 @@ class AdminProducer
 
         $this->producer->flush($timeout_ms);
     }
+
 }
+
+//$conf = new RdKafka\Conf();
+//$conf->set('metadata.broker.list', 'localhost:9092');
+//
+//$producer = new RdKafka\Producer($conf);
+//$producer->addBrokers('localhost:9092');
+//
+//$topic = $producer->newTopic('test');
+//
+//for ($i = 0; $i < 10; $i++) {
+//    $topic->produce(RD_KAFKA_PARTITION_UA, 0, 'Message ' . $i);
+//}
+//
+//$producer->poll(0);
+//
+//while ($producer->getOutQLen() > 0) {
+//    $producer->poll(50);
+//}
+//
+//echo "Messages sent successfully\n";
+

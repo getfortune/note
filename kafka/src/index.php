@@ -3,59 +3,37 @@ namespace  P\Kfaka;
 use P\Kfaka\Consumer\AdminConsumer;
 use P\Kfaka\Producer\AdminProducer;
 use RdKafka\Conf;
+use RdKafka\Exception;
 use RdKafka\Producer;
 
 require_once "../vendor/autoload.php";
-class index {
-    public $producer;
 
-    public $topic;
-
-    public function __construct()
-    {
-        $conf = new Conf();
-        $conf->set('bootstrap.servers', 'kafka2:9093,kafka3:9094,kafka:9092');
-        $this->producer  = new Producer($conf);
-//        $this->producer->addBrokers("localhost:9092");
+$topicName = '1111';
+//$producer = new AdminProducer();
+//$producer->newTopic($topicName);
+//try {
+//    $result = $producer->createMessage($topicName, '我生产了一条消息-consumer');
+//    echo $result;
+//} catch (Exception $e) {
+//}
+$consumer = new AdminConsumer();
+$consumer->consumerTopic(function ($message) {
+    echo '我收到了一条消息：' . $message . "\n";
+    if ($message == '我生产了一条消息-consumer') {
+        return true;
+    } else {
+        return false;
     }
+}, $topicName);
 
-    public function newTopic(string $topicName)
-    {
-        // newTopic 第二个参数 是用来自定义副本分区策略的
-        $this->topic = $this->producer->newTopic($topicName);
-    }
-
-    public function createMessage(string $topicName, string $message, int $partition = RD_KAFKA_PARTITION_UA, int $msgSign = 0): int
-    {
-        $this->topic->produce(RD_KAFKA_PARTITION_UA, 0, '123123');
-        return $this->producer->flush(1000);
-    }
-}
-
-class KafkaProducer {
-    public $producer;
-
-    public function __construct() {
-        $conf = new \RdKafka\Conf();
-        $conf->set('bootstrap.servers', 'kafka2:9093,kafka3:9094,kafka:9092');
-        $this->producer = new \RdKafka\Producer($conf);
-    }
-
-    public function produce($topic, $message) {
-//        $this->producer->addBrokers("localhost:9092");
-        $topica = $this->producer->newTopic($topic);
-        $topica->produce(RD_KAFKA_PARTITION_UA, 0, $message);
-    }
-
-    public function flush($timeout = 1000) {
-        return $this->producer->flush($timeout);
-    }
-}
-
-$admin = new KafkaProducer();
-$admin->produce('test', '123123');
-$a = $admin->flush(10000);
-echo $a;
+//$consumer->subscribeTopic(function ($message) {
+//    echo '我收到了一条消息：' . $message;
+//    if ($message == '我生产了一条消息') {
+//        return true;
+//    } else {
+//        return false;
+//    }
+//}, [$topicName]);
 
 // 下面这个是可以的
 // 创建 Kafka 配置对象
